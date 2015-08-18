@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+
+import json
+
+from rest_framework import status
+from rest_framework.viewsets import ViewSet
+from rest_framework.response import Response
+
+__all__ = ({% for viewset in viewsets %}
+    '{{ viewset.class_name }}',
+{% endfor %})
+
+{% for viewset in viewsets %}
+class {{ viewset.class_name }}(ViewSet):
+    def list(self, request):
+        if request.GET.get('status') == 'error':
+            return Response({}, status=status.HTTP_404_NOT_FOUND)
+
+        result = json.loads('{{ viewset.result|safe }}')
+        {% if viewset.source == 'collection' %}
+        page = int(request.GET.get('page', 1))
+        item_key = result.keys()[0]
+        limit = 10
+        offset = (page - 1) * limit
+        slice_end = offset + limit
+        total = len(result[item_key])
+        result['_meta_'] = {'total': total}
+        result[item_key] = result[item_key][offset:slice_end]
+        {% endif %}
+
+        return Response(result, status=status.HTTP_200_OK)
+{% endfor %}

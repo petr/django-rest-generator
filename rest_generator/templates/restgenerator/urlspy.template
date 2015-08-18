@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+
+from django.conf.urls import include, url
+
+from rest_framework.routers import DefaultRouter
+
+from {{ app_name }}.viewsets import {{ viewsets|join:', ' }}
+
+
+router = DefaultRouter()
+{% for route in routes %}
+router.register('{{ route.url_prefix }}', {{ route.viewset_class_name }}, '{{ route.base_name }}')
+{% endfor %}
+urlpatterns = router.urls

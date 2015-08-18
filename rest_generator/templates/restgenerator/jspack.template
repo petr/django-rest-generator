@@ -1,0 +1,13 @@
+{
+    "name": "Global Map build",
+    "path": ".",
+    "version": "1.0",
+    "output": "{{ app_name }}.build.js",
+    "modules": {
+        "{{ app_name }}": "{{ app_name }}.js"
+    },
+    "main": "app/{{ app_name }}",
+    "shortcuts": true,
+
+    "sourcemap": ".lmd/{{ app_name }}.lmd.map"
+}

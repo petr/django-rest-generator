@@ -1,0 +1,5 @@
+
+$(function() {
+    var widgets = [{{ js_classes|join:',' }}];
+    new WidgetsHolder({widgets: widgets});
+});

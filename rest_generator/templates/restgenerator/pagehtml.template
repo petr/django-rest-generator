@@ -1,0 +1,5 @@
+    <script src="{{ STATIC_URL }}js/{{ app_name }}.build.js"></script>
+    <script>
+        {% for route in routes %}Routes.set('{{ route.name }}', '{{ route.url }}'){% endfor %}
+        {% for widget in widgets %}Widgets.set('{{ widget.name }}', {{ widget.options|safe }}){% endfor %}
+    </script>
